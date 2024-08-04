@@ -1,11 +1,25 @@
 <?
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class Job extends Model
 {
-    protected $table = 'job_lisitings';
-    protected $fillable = ['name', 'salary'];
+    use HasFactory;
+
+    protected $table = 'job_listings';
+    // protected $fillable = ['name', 'salary'];
+    protected $guarded = ['id'];
+
+    public function employer()
+    {
+        return $this->belongsTo(Employer::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'job_tag', 'job_listing_id');
+    }
 }
